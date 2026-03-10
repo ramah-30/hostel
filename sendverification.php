@@ -1,0 +1,41 @@
+<?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
+function sendBookingEmail($toEmail, $messageBody) {
+
+    $mail = new PHPMailer(true);
+
+    try {
+        // SMTP settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+
+        $mail->Username   = 'softwaredev668@gmail.com'; // Replace
+        $mail->Password   = 'y k y i d v l y e v h c k n k m';   // Replace (Gmail App Password)
+
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        // Sender and Receiver
+        $mail->setFrom('softwaredev668@gmail.com', 'U-Hostel');
+        $mail->addAddress($toEmail);  // Receiver
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Verification Code - U-Hostel';
+        $mail->Body    = $messageBody;
+
+        $mail->send();
+        return true;
+
+    } catch (Exception $e) {
+        return false;
+    }
+}
